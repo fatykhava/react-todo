@@ -10,30 +10,32 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 const TasksList = (props) => {
   return (
-      <List>
-        {props.tasks.map((value) => {
-          const labelId = `checkbox-list-label-${value.id}`;
+    <List>
+      {props.tasks.map((item) => {
+        const labelId = `checkbox-list-label-${item.id}`;
 
-          return (
-            <ListItem key={`item-${value.id}`} role={undefined} dense button>
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{ 'aria-labelledby': labelId }}
-                />
-              </ListItemIcon>
-              <ListItemText id={labelId} primary={value.text} />
-              <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="comments">
-                  <DeleteIcon />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          );
-        })}
-      </List>
+        return (
+          <ListItem key={`item-${item.id}`} role={undefined} dense button>
+            <ListItemIcon>
+              <Checkbox
+                edge="start"
+                tabIndex={-1}
+                checked={item.isCompleted}
+                disableRipple
+                inputProps={{'aria-labelledby': labelId}}
+                onChange={() => props.onStatusChange(item._id, !item.isCompleted)}
+              />
+            </ListItemIcon>
+            <ListItemText id={labelId} primary={item.name}/>
+            <ListItemSecondaryAction onClick={() => props.onTrashClick(item._id)}>
+              <IconButton edge="end" aria-label="comments">
+                <DeleteIcon/>
+              </IconButton>
+            </ListItemSecondaryAction>
+          </ListItem>
+        );
+      })}
+    </List>
   );
 }
 

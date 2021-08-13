@@ -1,21 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import TextField from "@material-ui/core/TextField";
 
 const TextInput = (props) => {
-  let [inputValue, setInputValue] = useState(props.inputValue);
-
-  useEffect(() => {
-    setInputValue(props.inputValue);
-  }, [props.inputValue])
+  let [inputValue, setInputValue] = useState('');
 
   const addItem = (e) => {
     if (e.key === 'Enter') {
-      return props.addNewItem(e.target.value);
+      props.addNewItem(e.target.value);
+      setInputValue('');
     }
   }
-
-  console.log('local:' + inputValue);
-  console.log(props.inputValue);
 
   return (
     <TextField id="standard-basic" label={props.labelName} fullWidth value={inputValue}

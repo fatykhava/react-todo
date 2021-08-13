@@ -1,18 +1,26 @@
+import {act} from "@testing-library/react";
+
 const todoReducer = (state, action) => {
   switch (action.type) {
     case 'add':
       return [
         ...state,
-        {
-          id: (state[state.length-1].id + 1),
-          text: action.value,
-          created_at: new Date(),
-          is_complete: false
-        }
+        action.item
       ];
+    case 'delete':
+      return state.filter(item => item._id !== action.itemId);
+    case 'toggle-status':
+      return state.map(item => {
+        if (item._id === action.itemId)  {
+          item.isCompleted = !item.isCompleted;
+          return item;
+        }
+
+        return item;
+      })
     case 'load':
       return [
-        ...action.items
+        ...action.data
       ];
     default:
       return state;
